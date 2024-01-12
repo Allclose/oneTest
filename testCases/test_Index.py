@@ -9,12 +9,11 @@ class Test_Index(unittest.TestCase):
         cls.env_url = readConfig().readconfig('ENV')
         cls.headers = {
             "Content-Type":"application/json",
-            "token":readConfig().readconfig('HEADERS','token'),
-            "clientName":"app_mall"
+            "token":readConfig().readconfig('HEADERS','token')
         }
     @classmethod
     def tearDownClass(cls) -> None:
-        print('【首页】模块测试结束')
+        print('测试结束')
 
     @file_data(os.path.join(r'..\Data',base_name))
     def test_index(self,case_name,method,path,payload=None,check=1,assert_src=None):
