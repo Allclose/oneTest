@@ -1,0 +1,16 @@
+cases:
+  -
+    case_name : login
+    path : /List
+    payload : '{"size": 10,"page": 1,"listType": 0,"position": 1}'
+    check : 1
+  -
+    case_name : login_error
+    path : /List
+    payload : '{"size": 请问,"page": 1,"listType": 0,"position": 1}'
+    check : 0
+  -
+    case_name : login_error2
+    path : /List
+    payload : '{"size": 10,"page": 1,"listType": 0,"position": 10000}'
+    check : 1
