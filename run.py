@@ -75,7 +75,6 @@ class RunTest:
             except Exception as e:
                 print("push_wechat发送消息报错：" + str(e))
     def run(self,option):
-
         suite = unittest.TestSuite()
         #依次加载所有用例
         '''self.case_list = readConfig().readconfig('CASES', option).split(',')
@@ -122,7 +121,6 @@ class RunTest:
                 smtp = SMTP(user=user, password=password, host=host, tls=False)
                 smtp.sender(to=to, subject="自动化测试报告_"+str(time.strftime('%Y_%m_%d_%H_%M_%S')), attachments=self.report)
         #将报告发送至企业微信群
-        print(self.report)
         self.push_wechat()
         return self.report
 
