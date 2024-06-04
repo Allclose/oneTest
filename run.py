@@ -13,7 +13,7 @@ class RunTest:
                                    f"自动化测试报告_{time.strftime('%Y_%m_%d_%H_%M_%S')}.html")
     #数据库连接和获取 token
     def setup_config(self):
-        token = getToken(15263277047)
+        token = getToken(13123123123)
         config = ConfigParser()
         config.read('config.ini', encoding='utf-8')
         projectPath = os.path.dirname(os.path.realpath(__file__))
