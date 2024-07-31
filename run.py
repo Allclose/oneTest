@@ -82,27 +82,21 @@ class RunTest:
                 runner.run(testlist=suite)
         #邮件推送测试报告
         try:
-            to = os.environ["email"]
-            if to:
+            if self.email_open == 'on':
                 user = readConfig().readconfig('EMAIL', 'user')
                 password = readConfig().readconfig('EMAIL', 'password')
                 host = readConfig().readconfig('EMAIL', 'host')
-                # 发邮件功能
-                # 使用ssl时应关闭tls
-                smtp = SMTP(user=user, password=password, host=host,tls=False)
-                smtp.sender(to=to, subject=str(time.strftime('%Y_%m_%d_%H_%M_%S'))+"_测试报告", attachments=self.report)
-        except Exception as e:
-            print(f"邮件发送失败: {e}")
-
-        if self.email_open == 'on':
-            user = readConfig().readconfig('EMAIL', 'user')
-            password = readConfig().readconfig('EMAIL', 'password')
-            host = readConfig().readconfig('EMAIL', 'host')
-            to = readConfig().readconfig('EMAIL', 'to')
+                to = readConfig().readconfig('EMAIL', 'to')
+            elif os.environ["email"]:
+                user = readConfig().readconfig('EMAIL', 'user')
+                password = readConfig().readconfig('EMAIL', 'password')
+                host = readConfig().readconfig('EMAIL', 'host')
             # 发邮件功能
             # 使用ssl时应关闭tls
-            smtp = SMTP(user=user, password=password, host=host, tls=False)
-            smtp.sender(to=to, subject="自动化测试报告_"+str(time.strftime('%Y_%m_%d_%H_%M_%S')), attachments=self.report)
+            smtp = SMTP(user=user, password=password, host=host,tls=False)
+            smtp.sender(to=to, subject="测试报告_"+str(time.strftime('%Y_%m_%d_%H_%M_%S')), attachments=self.report)
+        except Exception as e:
+            print(f"邮件发送失败: {e}")
         #将报告发送至企业微信群
         self.push_wechat()
         return self.report
