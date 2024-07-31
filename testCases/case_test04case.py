@@ -2,6 +2,9 @@
 import unittest, os,requests,paramunittest
 from common import readExcel,readYaml
 from readConfig import readConfig
+from common.getLog import logging   #记录日志
+
+
 #获取本文件名，拼接出数据文件名称
 file_name = os.path.basename(__file__).split('.')[0]+'.xlsx'
 #通过数据文件名称获取到内部login页的数据
@@ -15,6 +18,9 @@ token = readConfig().readconfig(section='HEADERS',option='token')
 class Test_Login(unittest.TestCase):
     #执行用例前定义url和headers信息
     def setUp(self) -> None:
+        logging.basicConfig(level=logging.DEBUG)
+        self.logger = logging.getLogger(self.__class__.__name__)
+        logging.info(f"开始执行测试用例: {cls.__name__}")
         self.url = readConfig().readconfig('ENV')
         self.headers = {
         "Content-Type": "application/json",
@@ -32,6 +38,7 @@ class Test_Login(unittest.TestCase):
         all_path = self.url+self.path
         result = requests.post(url=all_path,data=self.payload,headers=self.headers).json()
         self.assertEqual(result['state'],self.check,self.case_name+'————执行失败:'+str(result))
+        self.logger.info(result)
 
 if __name__ == '__main__':
     #运行本用例
